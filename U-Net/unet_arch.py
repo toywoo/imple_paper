@@ -29,7 +29,7 @@ class UEncBlock(nn.Module):
         x = self.maxpool(x)
         return x
 
-class UUpBlock(nn.Module):
+class UDecBlock(nn.Module):
     """
     U-Net의 Decoder 블록
     Conv + ReLU #2, Conv 2x2로 업샘플링
@@ -98,10 +98,10 @@ class UNet(nn.Module):
         self.UEncBlock128 = UEncBlock(64, 128)
         self.UEncBlock256 = UEncBlock(128, 256)
         self.UEncBlock512 = UEncBlock(256, 512)
-        self.UDecBlock1024 = UUpBlock(512, 1024)
-        self.UDecBlock512 = UUpBlock(1024, 512)
-        self.UDecBlock256 = UUpBlock(512, 256)
-        self.UDecBlock128 = UUpBlock(256, 128)
+        self.UDecBlock1024 = UDecBlock(512, 1024)
+        self.UDecBlock512 = UDecBlock(1024, 512)
+        self.UDecBlock256 = UDecBlock(512, 256)
+        self.UDecBlock128 = UDecBlock(256, 128)
         self.UOutBlock = UOutBlock(128, 64)
 
     """
