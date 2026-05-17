@@ -1,0 +1,33 @@
+Using device: cuda
+=== 1. 테스트 데이터셋 평가 시작 ===
+Test | Top-1 Acc: 83.16% | Top-5 Acc: 95.26% |
+
+=== 가장 잘 맞추는 클래스 Top 5 ===
+Class 36: 100.00%
+Class 58: 100.00%
+Class 81: 100.00%
+Class 145: 100.00%
+Class 23: 98.00%
+
+=== 가장 못 맞추는 클래스 Top 5 ===
+Class 132: 50.00%
+Class 104: 52.00%
+Class 159: 58.00%
+Class 197: 60.00%
+Class 131: 60.00%
+
+=== 2. 학습 곡선 시각화 ===
+학습 곡선이 'learning_curves.png'로 저장되었습니다.
+
+=== 3. 예측 결과 샘플 시각화 ===
+예측 결과 샘플이 'predictions_sample.png'로 저장되었습니다.
+
+=== 4. 단일 이미지 추론 및 GradCAM ===
+GradCAM 결과가 'gradcam_result.png'로 저장되었습니다.
+
+=== 이미지: ./dataset/tiny-imagenet-200/val/n01443537/val_1230.JPEG 추론 결과 ===
+Top 1: Class 0 (90.97%)
+Top 2: Class 163 (0.09%)
+Top 3: Class 58 (0.09%)
+Top 4: Class 143 (0.07%)
+Top 5: Class 48 (0.07%)

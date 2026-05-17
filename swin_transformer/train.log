@@ -1,0 +1,678 @@
+nohup: ignoring input
+Using device: cuda
+
+Epoch 1/30
+--------------------
+Batch [0/1563] | Loss: 5.3882
+Batch [100/1563] | Loss: 3.6633
+Batch [200/1563] | Loss: 2.7843
+Batch [300/1563] | Loss: 2.1480
+Batch [400/1563] | Loss: 2.5315
+Batch [500/1563] | Loss: 2.7008
+Batch [600/1563] | Loss: 1.9181
+Batch [700/1563] | Loss: 2.0990
+Batch [800/1563] | Loss: 1.7316
+Batch [900/1563] | Loss: 2.1538
+Batch [1000/1563] | Loss: 2.2206
+Batch [1100/1563] | Loss: 1.9901
+Batch [1200/1563] | Loss: 1.5010
+Batch [1300/1563] | Loss: 1.7848
+Batch [1400/1563] | Loss: 1.9283
+Batch [1500/1563] | Loss: 1.9776
+Train | Loss: 2.2945 | Acc: 61.77%
+Validation | Loss: 1.5958 | Top-1 Acc: 77.79% | Top-5 Acc: 93.58%
+Epoch 1 finished in 1235.11 seconds
+ Best accuracy 모델 갱신! (77.79%) 저장 중...
+
+Epoch 2/30
+--------------------
+Batch [0/1563] | Loss: 1.6736
+Batch [100/1563] | Loss: 1.4928
+Batch [200/1563] | Loss: 1.8780
+Batch [300/1563] | Loss: 1.9107
+Batch [400/1563] | Loss: 1.8302
+Batch [500/1563] | Loss: 1.7593
+Batch [600/1563] | Loss: 1.6939
+Batch [700/1563] | Loss: 1.8324
+Batch [800/1563] | Loss: 1.9445
+Batch [900/1563] | Loss: 1.6051
+Batch [1000/1563] | Loss: 1.5909
+Batch [1100/1563] | Loss: 1.8605
+Batch [1200/1563] | Loss: 1.5766
+Batch [1300/1563] | Loss: 1.7559
+Batch [1400/1563] | Loss: 1.6403
+Batch [1500/1563] | Loss: 1.7350
+Train | Loss: 1.7121 | Acc: 75.21%
+Validation | Loss: 1.5372 | Top-1 Acc: 79.81% | Top-5 Acc: 94.14%
+Epoch 2 finished in 1193.65 seconds
+ Best accuracy 모델 갱신! (79.81%) 저장 중...
+
+Epoch 3/30
+--------------------
+Batch [0/1563] | Loss: 1.6552
+Batch [100/1563] | Loss: 1.5864
+Batch [200/1563] | Loss: 1.6255
+Batch [300/1563] | Loss: 1.6474
+Batch [400/1563] | Loss: 1.8818
+Batch [500/1563] | Loss: 1.7941
+Batch [600/1563] | Loss: 1.3214
+Batch [700/1563] | Loss: 1.7606
+Batch [800/1563] | Loss: 1.6693
+Batch [900/1563] | Loss: 1.4394
+Batch [1000/1563] | Loss: 1.4236
+Batch [1100/1563] | Loss: 1.4844
+Batch [1200/1563] | Loss: 1.6033
+Batch [1300/1563] | Loss: 1.5236
+Batch [1400/1563] | Loss: 1.9914
+Batch [1500/1563] | Loss: 1.5649
+Train | Loss: 1.5698 | Acc: 79.02%
+Validation | Loss: 1.5002 | Top-1 Acc: 80.68% | Top-5 Acc: 94.93%
+Epoch 3 finished in 1239.97 seconds
+ Best accuracy 모델 갱신! (80.68%) 저장 중...
+
+Epoch 4/30
+--------------------
+Batch [0/1563] | Loss: 1.3928
+Batch [100/1563] | Loss: 1.3647
+Batch [200/1563] | Loss: 1.5223
+Batch [300/1563] | Loss: 1.3492
+Batch [400/1563] | Loss: 1.4838
+Batch [500/1563] | Loss: 1.7470
+Batch [600/1563] | Loss: 1.4555
+Batch [700/1563] | Loss: 1.5196
+Batch [800/1563] | Loss: 1.3240
+Batch [900/1563] | Loss: 1.2324
+Batch [1000/1563] | Loss: 1.4574
+Batch [1100/1563] | Loss: 1.3803
+Batch [1200/1563] | Loss: 1.1748
+Batch [1300/1563] | Loss: 1.3491
+Batch [1400/1563] | Loss: 1.6618
+Batch [1500/1563] | Loss: 1.6298
+Train | Loss: 1.4729 | Acc: 81.86%
+Validation | Loss: 1.5281 | Top-1 Acc: 79.49% | Top-5 Acc: 94.34%
+Epoch 4 finished in 1176.36 seconds
+
+Epoch 5/30
+--------------------
+Batch [0/1563] | Loss: 1.4569
+Batch [100/1563] | Loss: 1.2729
+Batch [200/1563] | Loss: 1.6864
+Batch [300/1563] | Loss: 1.2721
+Batch [400/1563] | Loss: 1.2235
+Batch [500/1563] | Loss: 1.5359
+Batch [600/1563] | Loss: 1.3075
+Batch [700/1563] | Loss: 1.3065
+Batch [800/1563] | Loss: 1.3612
+Batch [900/1563] | Loss: 1.2892
+Batch [1000/1563] | Loss: 1.3304
+Batch [1100/1563] | Loss: 1.5579
+Batch [1200/1563] | Loss: 1.2884
+Batch [1300/1563] | Loss: 1.1807
+Batch [1400/1563] | Loss: 1.6268
+Batch [1500/1563] | Loss: 1.3726
+Train | Loss: 1.3983 | Acc: 83.95%
+Validation | Loss: 1.4987 | Top-1 Acc: 80.95% | Top-5 Acc: 94.78%
+Epoch 5 finished in 1171.46 seconds
+ Best accuracy 모델 갱신! (80.95%) 저장 중...
+
+Epoch 6/30
+--------------------
+Batch [0/1563] | Loss: 1.3081
+Batch [100/1563] | Loss: 1.2693
+Batch [200/1563] | Loss: 1.2695
+Batch [300/1563] | Loss: 1.3383
+Batch [400/1563] | Loss: 1.2358
+Batch [500/1563] | Loss: 1.2493
+Batch [600/1563] | Loss: 1.3748
+Batch [700/1563] | Loss: 1.2888
+Batch [800/1563] | Loss: 1.3315
+Batch [900/1563] | Loss: 1.2566
+Batch [1000/1563] | Loss: 1.2571
+Batch [1100/1563] | Loss: 1.3718
+Batch [1200/1563] | Loss: 1.0577
+Batch [1300/1563] | Loss: 1.2403
+Batch [1400/1563] | Loss: 1.1999
+Batch [1500/1563] | Loss: 1.2459
+Train | Loss: 1.3439 | Acc: 85.64%
+Validation | Loss: 1.5177 | Top-1 Acc: 80.80% | Top-5 Acc: 94.53%
+Epoch 6 finished in 1160.52 seconds
+
+Epoch 7/30
+--------------------
+Batch [0/1563] | Loss: 1.2257
+Batch [100/1563] | Loss: 1.3972
+Batch [200/1563] | Loss: 1.4063
+Batch [300/1563] | Loss: 1.2096
+Batch [400/1563] | Loss: 1.0432
+Batch [500/1563] | Loss: 1.4800
+Batch [600/1563] | Loss: 1.3304
+Batch [700/1563] | Loss: 1.2864
+Batch [800/1563] | Loss: 1.1385
+Batch [900/1563] | Loss: 1.2809
+Batch [1000/1563] | Loss: 1.2734
+Batch [1100/1563] | Loss: 1.3947
+Batch [1200/1563] | Loss: 1.2526
+Batch [1300/1563] | Loss: 1.2049
+Batch [1400/1563] | Loss: 1.3229
+Batch [1500/1563] | Loss: 1.2799
+Train | Loss: 1.2883 | Acc: 87.36%
+Validation | Loss: 1.5233 | Top-1 Acc: 80.37% | Top-5 Acc: 94.52%
+Epoch 7 finished in 1218.20 seconds
+
+Epoch 8/30
+--------------------
+Batch [0/1563] | Loss: 1.1994
+Batch [100/1563] | Loss: 1.2423
+Batch [200/1563] | Loss: 1.0977
+Batch [300/1563] | Loss: 1.1944
+Batch [400/1563] | Loss: 1.1364
+Batch [500/1563] | Loss: 1.3666
+Batch [600/1563] | Loss: 1.4504
+Batch [700/1563] | Loss: 1.2171
+Batch [800/1563] | Loss: 1.1458
+Batch [900/1563] | Loss: 1.2858
+Batch [1000/1563] | Loss: 1.2178
+Batch [1100/1563] | Loss: 1.4295
+Batch [1200/1563] | Loss: 1.2587
+Batch [1300/1563] | Loss: 1.2698
+Batch [1400/1563] | Loss: 1.3046
+Batch [1500/1563] | Loss: 1.2461
+Train | Loss: 1.2453 | Acc: 88.78%
+Validation | Loss: 1.5177 | Top-1 Acc: 80.69% | Top-5 Acc: 94.56%
+Epoch 8 finished in 1204.90 seconds
+
+Epoch 9/30
+--------------------
+Batch [0/1563] | Loss: 1.3752
+Batch [100/1563] | Loss: 1.0992
+Batch [200/1563] | Loss: 1.0363
+Batch [300/1563] | Loss: 1.2836
+Batch [400/1563] | Loss: 1.3363
+Batch [500/1563] | Loss: 1.1477
+Batch [600/1563] | Loss: 1.0473
+Batch [700/1563] | Loss: 1.2694
+Batch [800/1563] | Loss: 1.2782
+Batch [900/1563] | Loss: 1.2213
+Batch [1000/1563] | Loss: 1.1405
+Batch [1100/1563] | Loss: 1.2032
+Batch [1200/1563] | Loss: 1.2738
+Batch [1300/1563] | Loss: 1.3153
+Batch [1400/1563] | Loss: 1.1513
+Batch [1500/1563] | Loss: 1.1630
+Train | Loss: 1.2059 | Acc: 90.19%
+Validation | Loss: 1.5169 | Top-1 Acc: 81.11% | Top-5 Acc: 94.54%
+Epoch 9 finished in 1168.09 seconds
+ Best accuracy 모델 갱신! (81.11%) 저장 중...
+
+Epoch 10/30
+--------------------
+Batch [0/1563] | Loss: 1.2156
+Batch [100/1563] | Loss: 1.2479
+Batch [200/1563] | Loss: 1.3151
+Batch [300/1563] | Loss: 1.1115
+Batch [400/1563] | Loss: 1.1450
+Batch [500/1563] | Loss: 1.0839
+Batch [600/1563] | Loss: 1.0672
+Batch [700/1563] | Loss: 1.2442
+Batch [800/1563] | Loss: 1.2571
+Batch [900/1563] | Loss: 1.1333
+Batch [1000/1563] | Loss: 1.0969
+Batch [1100/1563] | Loss: 1.2115
+Batch [1200/1563] | Loss: 1.1238
+Batch [1300/1563] | Loss: 1.0978
+Batch [1400/1563] | Loss: 1.1458
+Batch [1500/1563] | Loss: 1.1634
+Train | Loss: 1.1742 | Acc: 91.07%
+Validation | Loss: 1.5151 | Top-1 Acc: 81.09% | Top-5 Acc: 94.58%
+Epoch 10 finished in 1188.89 seconds
+
+Epoch 11/30
+--------------------
+Batch [0/1563] | Loss: 1.1293
+Batch [100/1563] | Loss: 1.1014
+Batch [200/1563] | Loss: 1.1723
+Batch [300/1563] | Loss: 1.2928
+Batch [400/1563] | Loss: 1.2378
+Batch [500/1563] | Loss: 1.0582
+Batch [600/1563] | Loss: 1.1532
+Batch [700/1563] | Loss: 1.1793
+Batch [800/1563] | Loss: 1.1676
+Batch [900/1563] | Loss: 1.1448
+Batch [1000/1563] | Loss: 1.1268
+Batch [1100/1563] | Loss: 1.1699
+Batch [1200/1563] | Loss: 1.0684
+Batch [1300/1563] | Loss: 1.0457
+Batch [1400/1563] | Loss: 1.1924
+Batch [1500/1563] | Loss: 1.1147
+Train | Loss: 1.1454 | Acc: 92.20%
+Validation | Loss: 1.5147 | Top-1 Acc: 81.33% | Top-5 Acc: 94.50%
+Epoch 11 finished in 1156.62 seconds
+ Best accuracy 모델 갱신! (81.33%) 저장 중...
+
+Epoch 12/30
+--------------------
+Batch [0/1563] | Loss: 1.0819
+Batch [100/1563] | Loss: 1.1215
+Batch [200/1563] | Loss: 1.0171
+Batch [300/1563] | Loss: 1.1949
+Batch [400/1563] | Loss: 1.0682
+Batch [500/1563] | Loss: 1.1042
+Batch [600/1563] | Loss: 1.0704
+Batch [700/1563] | Loss: 0.9780
+Batch [800/1563] | Loss: 1.0430
+Batch [900/1563] | Loss: 1.1399
+Batch [1000/1563] | Loss: 1.1208
+Batch [1100/1563] | Loss: 1.1019
+Batch [1200/1563] | Loss: 1.0414
+Batch [1300/1563] | Loss: 1.1371
+Batch [1400/1563] | Loss: 1.0946
+Batch [1500/1563] | Loss: 1.0333
+Train | Loss: 1.1181 | Acc: 93.11%
+Validation | Loss: 1.5202 | Top-1 Acc: 80.86% | Top-5 Acc: 94.63%
+Epoch 12 finished in 1153.00 seconds
+
+Epoch 13/30
+--------------------
+Batch [0/1563] | Loss: 1.0675
+Batch [100/1563] | Loss: 1.0510
+Batch [200/1563] | Loss: 1.1209
+Batch [300/1563] | Loss: 1.1209
+Batch [400/1563] | Loss: 1.0466
+Batch [500/1563] | Loss: 1.0372
+Batch [600/1563] | Loss: 1.0186
+Batch [700/1563] | Loss: 1.0175
+Batch [800/1563] | Loss: 1.1113
+Batch [900/1563] | Loss: 1.3105
+Batch [1000/1563] | Loss: 1.0508
+Batch [1100/1563] | Loss: 1.0438
+Batch [1200/1563] | Loss: 1.0950
+Batch [1300/1563] | Loss: 1.0740
+Batch [1400/1563] | Loss: 1.0735
+Batch [1500/1563] | Loss: 1.1576
+Train | Loss: 1.0937 | Acc: 93.97%
+Validation | Loss: 1.5079 | Top-1 Acc: 81.27% | Top-5 Acc: 94.63%
+Epoch 13 finished in 1144.85 seconds
+
+Epoch 14/30
+--------------------
+Batch [0/1563] | Loss: 1.0427
+Batch [100/1563] | Loss: 1.1204
+Batch [200/1563] | Loss: 1.0311
+Batch [300/1563] | Loss: 1.0820
+Batch [400/1563] | Loss: 0.9803
+Batch [500/1563] | Loss: 1.0244
+Batch [600/1563] | Loss: 1.1302
+Batch [700/1563] | Loss: 1.0842
+Batch [800/1563] | Loss: 1.0162
+Batch [900/1563] | Loss: 1.0562
+Batch [1000/1563] | Loss: 0.9896
+Batch [1100/1563] | Loss: 1.1752
+Batch [1200/1563] | Loss: 1.0375
+Batch [1300/1563] | Loss: 1.1866
+Batch [1400/1563] | Loss: 1.2332
+Batch [1500/1563] | Loss: 1.0158
+Train | Loss: 1.0725 | Acc: 94.76%
+Validation | Loss: 1.5096 | Top-1 Acc: 81.46% | Top-5 Acc: 94.78%
+Epoch 14 finished in 1151.73 seconds
+ Best accuracy 모델 갱신! (81.46%) 저장 중...
+
+Epoch 15/30
+--------------------
+Batch [0/1563] | Loss: 0.9790
+Batch [100/1563] | Loss: 1.0682
+Batch [200/1563] | Loss: 1.0809
+Batch [300/1563] | Loss: 1.1156
+Batch [400/1563] | Loss: 1.0408
+Batch [500/1563] | Loss: 1.0051
+Batch [600/1563] | Loss: 1.0063
+Batch [700/1563] | Loss: 1.0380
+Batch [800/1563] | Loss: 0.9722
+Batch [900/1563] | Loss: 1.0650
+Batch [1000/1563] | Loss: 0.9706
+Batch [1100/1563] | Loss: 1.0691
+Batch [1200/1563] | Loss: 1.1349
+Batch [1300/1563] | Loss: 1.1004
+Batch [1400/1563] | Loss: 1.0043
+Batch [1500/1563] | Loss: 1.0480
+Train | Loss: 1.0531 | Acc: 95.38%
+Validation | Loss: 1.5187 | Top-1 Acc: 81.29% | Top-5 Acc: 94.59%
+Epoch 15 finished in 1176.62 seconds
+
+Epoch 16/30
+--------------------
+Batch [0/1563] | Loss: 1.0510
+Batch [100/1563] | Loss: 1.0083
+Batch [200/1563] | Loss: 1.0631
+Batch [300/1563] | Loss: 1.0736
+Batch [400/1563] | Loss: 1.0192
+Batch [500/1563] | Loss: 1.0527
+Batch [600/1563] | Loss: 1.0684
+Batch [700/1563] | Loss: 1.0580
+Batch [800/1563] | Loss: 1.0048
+Batch [900/1563] | Loss: 1.0585
+Batch [1000/1563] | Loss: 0.9609
+Batch [1100/1563] | Loss: 1.0721
+Batch [1200/1563] | Loss: 1.0581
+Batch [1300/1563] | Loss: 0.9683
+Batch [1400/1563] | Loss: 1.0813
+Batch [1500/1563] | Loss: 1.0379
+Train | Loss: 1.0369 | Acc: 95.91%
+Validation | Loss: 1.4998 | Top-1 Acc: 81.92% | Top-5 Acc: 94.53%
+Epoch 16 finished in 1158.47 seconds
+ Best accuracy 모델 갱신! (81.92%) 저장 중...
+
+Epoch 17/30
+--------------------
+Batch [0/1563] | Loss: 1.0053
+Batch [100/1563] | Loss: 1.0006
+Batch [200/1563] | Loss: 1.0954
+Batch [300/1563] | Loss: 0.9939
+Batch [400/1563] | Loss: 1.0639
+Batch [500/1563] | Loss: 1.0317
+Batch [600/1563] | Loss: 1.0484
+Batch [700/1563] | Loss: 0.9962
+Batch [800/1563] | Loss: 1.0337
+Batch [900/1563] | Loss: 1.1304
+Batch [1000/1563] | Loss: 0.9154
+Batch [1100/1563] | Loss: 0.9703
+Batch [1200/1563] | Loss: 1.0868
+Batch [1300/1563] | Loss: 1.0764
+Batch [1400/1563] | Loss: 1.0068
+Batch [1500/1563] | Loss: 1.0012
+Train | Loss: 1.0251 | Acc: 96.31%
+Validation | Loss: 1.4922 | Top-1 Acc: 82.08% | Top-5 Acc: 94.65%
+Epoch 17 finished in 1169.25 seconds
+ Best accuracy 모델 갱신! (82.08%) 저장 중...
+
+Epoch 18/30
+--------------------
+Batch [0/1563] | Loss: 0.9820
+Batch [100/1563] | Loss: 0.9824
+Batch [200/1563] | Loss: 1.0100
+Batch [300/1563] | Loss: 0.9669
+Batch [400/1563] | Loss: 1.1708
+Batch [500/1563] | Loss: 1.0132
+Batch [600/1563] | Loss: 0.9303
+Batch [700/1563] | Loss: 1.0042
+Batch [800/1563] | Loss: 1.1221
+Batch [900/1563] | Loss: 1.0986
+Batch [1000/1563] | Loss: 0.9666
+Batch [1100/1563] | Loss: 1.0246
+Batch [1200/1563] | Loss: 0.9738
+Batch [1300/1563] | Loss: 0.9876
+Batch [1400/1563] | Loss: 1.0441
+Batch [1500/1563] | Loss: 0.9943
+Train | Loss: 1.0090 | Acc: 96.79%
+Validation | Loss: 1.5033 | Top-1 Acc: 81.80% | Top-5 Acc: 94.57%
+Epoch 18 finished in 1153.42 seconds
+
+Epoch 19/30
+--------------------
+Batch [0/1563] | Loss: 0.9437
+Batch [100/1563] | Loss: 0.9234
+Batch [200/1563] | Loss: 0.9398
+Batch [300/1563] | Loss: 0.9715
+Batch [400/1563] | Loss: 0.9894
+Batch [500/1563] | Loss: 0.9402
+Batch [600/1563] | Loss: 1.0269
+Batch [700/1563] | Loss: 0.9701
+Batch [800/1563] | Loss: 0.9641
+Batch [900/1563] | Loss: 0.9583
+Batch [1000/1563] | Loss: 0.9770
+Batch [1100/1563] | Loss: 0.9826
+Batch [1200/1563] | Loss: 0.9741
+Batch [1300/1563] | Loss: 1.0787
+Batch [1400/1563] | Loss: 0.9786
+Batch [1500/1563] | Loss: 1.1531
+Train | Loss: 0.9988 | Acc: 97.14%
+Validation | Loss: 1.4930 | Top-1 Acc: 82.08% | Top-5 Acc: 94.72%
+Epoch 19 finished in 1150.01 seconds
+
+Epoch 20/30
+--------------------
+Batch [0/1563] | Loss: 0.9608
+Batch [100/1563] | Loss: 1.1343
+Batch [200/1563] | Loss: 0.9607
+Batch [300/1563] | Loss: 0.9918
+Batch [400/1563] | Loss: 0.9513
+Batch [500/1563] | Loss: 1.0088
+Batch [600/1563] | Loss: 1.0619
+Batch [700/1563] | Loss: 0.9826
+Batch [800/1563] | Loss: 0.9448
+Batch [900/1563] | Loss: 1.0476
+Batch [1000/1563] | Loss: 0.9196
+Batch [1100/1563] | Loss: 0.9684
+Batch [1200/1563] | Loss: 0.9174
+Batch [1300/1563] | Loss: 1.0288
+Batch [1400/1563] | Loss: 0.9969
+Batch [1500/1563] | Loss: 0.9477
+Train | Loss: 0.9842 | Acc: 97.60%
+Validation | Loss: 1.4938 | Top-1 Acc: 82.00% | Top-5 Acc: 94.70%
+Epoch 20 finished in 1151.15 seconds
+
+Epoch 21/30
+--------------------
+Batch [0/1563] | Loss: 0.9803
+Batch [100/1563] | Loss: 0.9566
+Batch [200/1563] | Loss: 0.9766
+Batch [300/1563] | Loss: 0.9301
+Batch [400/1563] | Loss: 0.9622
+Batch [500/1563] | Loss: 0.9550
+Batch [600/1563] | Loss: 1.0174
+Batch [700/1563] | Loss: 1.0227
+Batch [800/1563] | Loss: 0.9668
+Batch [900/1563] | Loss: 0.9742
+Batch [1000/1563] | Loss: 0.9455
+Batch [1100/1563] | Loss: 0.9644
+Batch [1200/1563] | Loss: 0.9305
+Batch [1300/1563] | Loss: 0.9212
+Batch [1400/1563] | Loss: 0.9408
+Batch [1500/1563] | Loss: 1.0112
+Train | Loss: 0.9776 | Acc: 97.80%
+Validation | Loss: 1.4781 | Top-1 Acc: 82.41% | Top-5 Acc: 94.84%
+Epoch 21 finished in 1163.51 seconds
+ Best accuracy 모델 갱신! (82.41%) 저장 중...
+
+Epoch 22/30
+--------------------
+Batch [0/1563] | Loss: 0.9905
+Batch [100/1563] | Loss: 1.0035
+Batch [200/1563] | Loss: 0.9629
+Batch [300/1563] | Loss: 0.9367
+Batch [400/1563] | Loss: 0.9935
+Batch [500/1563] | Loss: 0.9435
+Batch [600/1563] | Loss: 0.9239
+Batch [700/1563] | Loss: 0.9487
+Batch [800/1563] | Loss: 0.9777
+Batch [900/1563] | Loss: 0.9445
+Batch [1000/1563] | Loss: 0.9207
+Batch [1100/1563] | Loss: 0.9532
+Batch [1200/1563] | Loss: 0.9449
+Batch [1300/1563] | Loss: 0.9737
+Batch [1400/1563] | Loss: 0.9287
+Batch [1500/1563] | Loss: 0.9683
+Train | Loss: 0.9681 | Acc: 98.09%
+Validation | Loss: 1.4770 | Top-1 Acc: 82.56% | Top-5 Acc: 94.96%
+Epoch 22 finished in 1149.59 seconds
+ Best accuracy 모델 갱신! (82.56%) 저장 중...
+
+Epoch 23/30
+--------------------
+Batch [0/1563] | Loss: 0.9109
+Batch [100/1563] | Loss: 0.9892
+Batch [200/1563] | Loss: 0.9151
+Batch [300/1563] | Loss: 0.9367
+Batch [400/1563] | Loss: 1.0571
+Batch [500/1563] | Loss: 0.9176
+Batch [600/1563] | Loss: 0.9493
+Batch [700/1563] | Loss: 0.9366
+Batch [800/1563] | Loss: 0.9523
+Batch [900/1563] | Loss: 1.0018
+Batch [1000/1563] | Loss: 0.9660
+Batch [1100/1563] | Loss: 0.9270
+Batch [1200/1563] | Loss: 0.9533
+Batch [1300/1563] | Loss: 0.9084
+Batch [1400/1563] | Loss: 0.9570
+Batch [1500/1563] | Loss: 0.9553
+Train | Loss: 0.9625 | Acc: 98.22%
+Validation | Loss: 1.4713 | Top-1 Acc: 82.72% | Top-5 Acc: 94.82%
+Epoch 23 finished in 1149.01 seconds
+ Best accuracy 모델 갱신! (82.72%) 저장 중...
+
+Epoch 24/30
+--------------------
+Batch [0/1563] | Loss: 0.9649
+Batch [100/1563] | Loss: 0.9089
+Batch [200/1563] | Loss: 0.9465
+Batch [300/1563] | Loss: 0.9042
+Batch [400/1563] | Loss: 0.9424
+Batch [500/1563] | Loss: 0.9924
+Batch [600/1563] | Loss: 0.9176
+Batch [700/1563] | Loss: 1.0120
+Batch [800/1563] | Loss: 0.9910
+Batch [900/1563] | Loss: 0.9256
+Batch [1000/1563] | Loss: 0.9819
+Batch [1100/1563] | Loss: 0.9651
+Batch [1200/1563] | Loss: 0.9377
+Batch [1300/1563] | Loss: 0.9385
+Batch [1400/1563] | Loss: 0.9406
+Batch [1500/1563] | Loss: 1.0221
+Train | Loss: 0.9549 | Acc: 98.43%
+Validation | Loss: 1.4657 | Top-1 Acc: 82.86% | Top-5 Acc: 95.11%
+Epoch 24 finished in 1154.81 seconds
+ Best accuracy 모델 갱신! (82.86%) 저장 중...
+
+Epoch 25/30
+--------------------
+Batch [0/1563] | Loss: 0.9901
+Batch [100/1563] | Loss: 0.9366
+Batch [200/1563] | Loss: 0.9129
+Batch [300/1563] | Loss: 0.9500
+Batch [400/1563] | Loss: 0.9122
+Batch [500/1563] | Loss: 1.0128
+Batch [600/1563] | Loss: 0.9273
+Batch [700/1563] | Loss: 0.9573
+Batch [800/1563] | Loss: 0.9386
+Batch [900/1563] | Loss: 0.9364
+Batch [1000/1563] | Loss: 0.9658
+Batch [1100/1563] | Loss: 1.0301
+Batch [1200/1563] | Loss: 0.9149
+Batch [1300/1563] | Loss: 0.9196
+Batch [1400/1563] | Loss: 0.9774
+Batch [1500/1563] | Loss: 0.9038
+Train | Loss: 0.9506 | Acc: 98.53%
+Validation | Loss: 1.4669 | Top-1 Acc: 82.86% | Top-5 Acc: 95.16%
+Epoch 25 finished in 1154.36 seconds
+
+Epoch 26/30
+--------------------
+Batch [0/1563] | Loss: 0.9303
+Batch [100/1563] | Loss: 0.9611
+Batch [200/1563] | Loss: 0.9379
+Batch [300/1563] | Loss: 0.8998
+Batch [400/1563] | Loss: 0.9353
+Batch [500/1563] | Loss: 0.9647
+Batch [600/1563] | Loss: 0.8946
+Batch [700/1563] | Loss: 0.8939
+Batch [800/1563] | Loss: 0.9652
+Batch [900/1563] | Loss: 0.9378
+Batch [1000/1563] | Loss: 0.9936
+Batch [1100/1563] | Loss: 1.0089
+Batch [1200/1563] | Loss: 0.9121
+Batch [1300/1563] | Loss: 0.9036
+Batch [1400/1563] | Loss: 0.9366
+Batch [1500/1563] | Loss: 0.9140
+Train | Loss: 0.9461 | Acc: 98.67%
+Validation | Loss: 1.4624 | Top-1 Acc: 82.95% | Top-5 Acc: 95.12%
+Epoch 26 finished in 1148.66 seconds
+ Best accuracy 모델 갱신! (82.95%) 저장 중...
+
+Epoch 27/30
+--------------------
+Batch [0/1563] | Loss: 0.9378
+Batch [100/1563] | Loss: 0.9049
+Batch [200/1563] | Loss: 0.9577
+Batch [300/1563] | Loss: 0.9359
+Batch [400/1563] | Loss: 0.9327
+Batch [500/1563] | Loss: 0.9387
+Batch [600/1563] | Loss: 0.9665
+Batch [700/1563] | Loss: 0.8995
+Batch [800/1563] | Loss: 0.9391
+Batch [900/1563] | Loss: 0.9635
+Batch [1000/1563] | Loss: 0.9370
+Batch [1100/1563] | Loss: 0.9246
+Batch [1200/1563] | Loss: 0.9802
+Batch [1300/1563] | Loss: 0.9468
+Batch [1400/1563] | Loss: 0.9029
+Batch [1500/1563] | Loss: 0.9412
+Train | Loss: 0.9419 | Acc: 98.77%
+Validation | Loss: 1.4588 | Top-1 Acc: 83.06% | Top-5 Acc: 95.12%
+Epoch 27 finished in 1146.33 seconds
+ Best accuracy 모델 갱신! (83.06%) 저장 중...
+
+Epoch 28/30
+--------------------
+Batch [0/1563] | Loss: 0.8998
+Batch [100/1563] | Loss: 0.8994
+Batch [200/1563] | Loss: 0.9172
+Batch [300/1563] | Loss: 0.9292
+Batch [400/1563] | Loss: 0.9301
+Batch [500/1563] | Loss: 0.9690
+Batch [600/1563] | Loss: 0.9018
+Batch [700/1563] | Loss: 0.8977
+Batch [800/1563] | Loss: 0.9670
+Batch [900/1563] | Loss: 0.9390
+Batch [1000/1563] | Loss: 0.9446
+Batch [1100/1563] | Loss: 0.9302
+Batch [1200/1563] | Loss: 0.8984
+Batch [1300/1563] | Loss: 1.0259
+Batch [1400/1563] | Loss: 0.9818
+Batch [1500/1563] | Loss: 0.9603
+Train | Loss: 0.9411 | Acc: 98.77%
+Validation | Loss: 1.4542 | Top-1 Acc: 83.16% | Top-5 Acc: 95.26%
+Epoch 28 finished in 1151.76 seconds
+ Best accuracy 모델 갱신! (83.16%) 저장 중...
+
+Epoch 29/30
+--------------------
+Batch [0/1563] | Loss: 0.9095
+Batch [100/1563] | Loss: 0.8828
+Batch [200/1563] | Loss: 0.9116
+Batch [300/1563] | Loss: 0.9474
+Batch [400/1563] | Loss: 0.9839
+Batch [500/1563] | Loss: 0.9687
+Batch [600/1563] | Loss: 0.9847
+Batch [700/1563] | Loss: 0.9316
+Batch [800/1563] | Loss: 0.9160
+Batch [900/1563] | Loss: 1.0366
+Batch [1000/1563] | Loss: 0.9605
+Batch [1100/1563] | Loss: 0.9587
+Batch [1200/1563] | Loss: 0.9577
+Batch [1300/1563] | Loss: 0.9699
+Batch [1400/1563] | Loss: 1.0347
+Batch [1500/1563] | Loss: 0.9307
+Train | Loss: 0.9414 | Acc: 98.79%
+Validation | Loss: 1.4571 | Top-1 Acc: 83.05% | Top-5 Acc: 95.21%
+Epoch 29 finished in 1149.97 seconds
+
+Epoch 30/30
+--------------------
+Batch [0/1563] | Loss: 0.9449
+Batch [100/1563] | Loss: 0.9268
+Batch [200/1563] | Loss: 0.9998
+Batch [300/1563] | Loss: 0.9387
+Batch [400/1563] | Loss: 0.9106
+Batch [500/1563] | Loss: 0.9308
+Batch [600/1563] | Loss: 0.9245
+Batch [700/1563] | Loss: 0.8967
+Batch [800/1563] | Loss: 0.9287
+Batch [900/1563] | Loss: 0.9031
+Batch [1000/1563] | Loss: 0.9188
+Batch [1100/1563] | Loss: 0.9125
+Batch [1200/1563] | Loss: 0.9234
+Batch [1300/1563] | Loss: 0.9958
+Batch [1400/1563] | Loss: 0.9000
+Batch [1500/1563] | Loss: 0.9725
+Train | Loss: 0.9386 | Acc: 98.84%
+Validation | Loss: 1.4556 | Top-1 Acc: 82.96% | Top-5 Acc: 95.25%
+Epoch 30 finished in 1152.52 seconds

@@ -16,13 +16,18 @@ Swin Transformer 학습 가이드
 - 다운로드: http://cs231n.stanford.edu/tiny-imagenet-200.zip
 """
 
-import torch
+import torch, torchvision
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from torchvision import datasets 
+from torchvision.models import swin_t, Swin_T_Weights
 import torchvision.transforms as transforms
+import time
 
-# from swin_transformer import SwinTransformer  # 직접 구현한 모델 사용 시
+from knockknock import discord_sender
+
+from swin_transformer import SwinTransformer  # 직접 구현한 모델 사용 시
 
 
 # =============================================================================
@@ -57,6 +62,30 @@ def reorganize_val_folder():
 # TODO: train_transform, val_transform 정의
 # TODO: ImageFolder로 데이터셋 로드
 # TODO: DataLoader 구성 (batch_size=64~128, num_workers=4, pin_memory=True)
+def set_dateset(batch_size, num_workers=0):
+    train_transform = transforms.Compose([
+        transforms.Resize(256),
+        transforms.RandomCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
+    val_transform = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
+    train_dataset = datasets.ImageFolder(root='./dataset/tiny-imagenet-200/train', transform=train_transform)
+    val_dataset = datasets.ImageFolder(root='./dataset/tiny-imagenet-200/val', transform=val_transform)
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+
+    return train_loader, val_loader
 
 
 # =============================================================================
@@ -105,6 +134,7 @@ def reorganize_val_folder():
 # TODO: optimizer, scheduler, criterion 정의
 
 
+
 # =============================================================================
 # Step 5: 학습 루프
 # =============================================================================
@@ -117,7 +147,41 @@ def train_one_epoch(model, train_loader, criterion, optimizer, device):
     4. epoch 평균 loss, accuracy 반환
     """
     # TODO: 학습 루프 구현
-    pass
+    model.train()
+    running_loss = 0.0
+    correct = 0
+    total = 0
+    
+    for batch, (inputs, labels) in enumerate(train_loader):
+        inputs, labels = inputs.to(device), labels.to(device)
+
+        # 1. 예측 및 손실 계산
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+
+        # 2. 역전파
+        optimizer.zero_grad()
+        loss.backward()
+        
+        # [추가] Gradient Clipping (Swin 같은 Transformer 모델에 권장)
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
+        
+        optimizer.step()
+
+        # 통계 계산
+        running_loss += loss.item()
+        _, predicted = outputs.max(1)
+        total += labels.size(0)
+        correct += predicted.eq(labels).sum().item()
+
+        if batch % 100 == 0:
+            print(f"Batch [{batch}/{len(train_loader)}] | Loss: {loss.item():.4f}")
+
+    epoch_loss = running_loss / len(train_loader)
+    epoch_acc = 100. * correct / total
+    
+    return epoch_loss, epoch_acc
+
 
 
 # =============================================================================
@@ -132,7 +196,36 @@ def validate(model, val_loader, criterion, device):
     3. (선택) Top-5 accuracy: outputs.topk(5, dim=1) 활용
     """
     # TODO: 검증 루프 구현
-    pass
+    model.eval()  # 평가 모드 (드롭아웃, 배치노름 등이 평가용으로 바뀜)
+    running_loss = 0.0
+    correct_top1 = 0
+    correct_top5 = 0
+    total = 0
+    
+    for inputs, labels in val_loader:
+        inputs, labels = inputs.to(device), labels.to(device)
+        # 1. 예측 및 손실 계산 (No Grad 상태이므로 backward는 안 함)
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        running_loss += loss.item()
+        
+        # 통계 계산
+        total += labels.size(0)
+        
+        # Top-1 Accuracy 계산
+        _, predicted = outputs.max(1)
+        correct_top1 += predicted.eq(labels).sum().item()
+        
+        # Top-5 Accuracy 계산 (예측값 중 상위 5개 안에 정답이 있는지 확인)
+        _, top5_pred = outputs.topk(5, dim=1)
+        correct_top5 += top5_pred.eq(labels.view(-1, 1)).sum().item()
+    val_loss = running_loss / len(val_loader)
+    val_acc_top1 = 100. * correct_top1 / total
+    val_acc_top5 = 100. * correct_top5 / total
+    
+    print(f"Validation | Loss: {val_loss:.4f} | Top-1 Acc: {val_acc_top1:.2f}% | Top-5 Acc: {val_acc_top5:.2f}%")
+    
+    return val_loss, val_acc_top1
 
 
 # =============================================================================
@@ -148,6 +241,54 @@ def validate(model, val_loader, criterion, device):
 5. 총 30 epoch 정도 권장
 """
 
+def main():
+    batch_size = 64
+    epochs = 30
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    train_loader, val_loader = set_dateset(batch_size)
+
+    model = swin_t(weights=Swin_T_Weights.IMAGENET1K_V1)
+    model.head = nn.Linear(model.head.in_features, 200)
+    model = model.to(device)
+
+    optimizer = optim.AdamW(model.parameters(), lr=1e-4, weight_decay=0.05)
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-6)
+    loss_fn = nn.CrossEntropyLoss(label_smoothing=.1)
+
+    best_acc = 0.0  # 가장 높은 정확도를 저장할 변수
+    for e in range(epochs):
+        print(f"\nEpoch {e+1}/{epochs}")
+        print("-" * 20)
+
+        start_time = time.time()
+        # 1. 학습 (인자들을 마저 채웠습니다.)
+        train_loss, train_acc = train_one_epoch(model, train_loader, loss_fn, optimizer, device)
+        print(f"Train | Loss: {train_loss:.4f} | Acc: {train_acc:.2f}%")
+        
+        # 2. 검증
+        val_loss, val_acc = validate(model, val_loader, loss_fn, device)
+        
+        epoch_time = time.time() - start_time
+        print(f"Epoch {e+1} finished in {epoch_time:.2f} seconds")
+
+        # 3. 스케줄러 스텝 (학습률 갱신)
+        scheduler.step()
+        
+        # 4. Best 모델 저장 (val_acc 기준)
+        if val_acc > best_acc:
+            best_acc = val_acc
+            print(f" Best accuracy 모델 갱신! ({best_acc:.2f}%) 저장 중...")
+            
+            checkpoint = {
+                'epoch': e + 1,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'best_acc': best_acc
+            }
+            torch.save(checkpoint, 'swin_tiny_best.pth')
+
 # TODO: main() 함수 구현
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

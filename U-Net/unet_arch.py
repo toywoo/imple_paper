@@ -94,7 +94,7 @@ class UNet(nn.Module):
     """
     def __init__(self):
         super().__init__()
-        self.UEncBlock64 = UEncBlock(1, 64)
+        self.UEncBlock64 = UEncBlock(3, 64)
         self.UEncBlock128 = UEncBlock(64, 128)
         self.UEncBlock256 = UEncBlock(128, 256)
         self.UEncBlock512 = UEncBlock(256, 512)
@@ -105,7 +105,7 @@ class UNet(nn.Module):
         self.UOutBlock = UOutBlock(128, 64)
 
     """
-    Args:    x (Tensor): (B, 1, 572, 572)
+    Args:    x (Tensor): (B, 3, 572, 572)
     Returns: y (Tensor): (B, 2, 388, 388)
     """
     def forward(self, x):
@@ -137,7 +137,7 @@ class UNet(nn.Module):
 
 
 if __name__ == '__main__':
-    x = torch.rand(3, 1, 572, 572) # batch가 3인 이미지 텐서 (3, 1, 572, 572) 생성
+    x = torch.rand(3, 3, 572, 572) # batch가 3인 이미지 텐서 (3, 3, 572, 572) 생성
     model = UNet() # 네트워크 객체 생성
     out = model(x)
     print(f"Output shape: {out.shape}") # 출력 형식 확인(3, 2, 388, 388)

@@ -67,7 +67,9 @@ class PatchEmbedding(nn.Module):
         super().__init__()
         # TODO: Conv2d로 패치 분할 + 선형 투영 구현
         # TODO: LayerNorm(embed_dim) 추가
-        pass
+        self.conv = nn.Conv2d(in_channels=3, out_channels=embed_dim, kernel_size=patch_size, stride=patch_size)
+        self.flatten = nn.Flatten(2, 3)
+        self.ln = nn.LayerNorm(embed_dim)
 
     def forward(self, x):
         """
@@ -77,7 +79,11 @@ class PatchEmbedding(nn.Module):
             (B, H/4 * W/4, embed_dim) - 패치 임베딩, H와 W도 함께 반환하면 편리
         """
         # TODO: Conv2d → flatten → transpose → LayerNorm
-        pass
+        x = self.conv(x)
+        x = self.flatten(x)
+        x = x.transpose(1, 2)
+        x = self.ln(x)
+        return x
 
 
 # =============================================================================
@@ -101,7 +107,8 @@ class PatchMerging(nn.Module):
     def __init__(self, dim):
         super().__init__()
         # TODO: LayerNorm(4 * dim), Linear(4 * dim, 2 * dim, bias=False) 정의
-        pass
+        self.ln = nn.LayerNorm(4 * dim)
+        self.fc = nn.Linear(4 * dim, 2 * dim, bias=False)
 
     def forward(self, x, H, W):
         """
@@ -112,7 +119,22 @@ class PatchMerging(nn.Module):
             (B, H/2 * W/2, 2C), 새로운 H, W
         """
         # TODO: reshape → 2×2 그룹핑 → concat → norm → linear
-        pass
+     
+        x = x.reshape((x.shape[0], H, W, x.shape[2]))
+        
+        x0 = x[:, 0::2, 0::2, :]
+        x1 = x[:, 1::2, 0::2, :]
+        x2 = x[:, 0::2, 1::2, :]
+        x3 = x[:, 1::2, 1::2, :]
+
+        x = torch.cat([x0, x1, x2, x3], dim=-1)
+
+        x = self.ln(x)
+        x = self.fc(x)
+
+        x = x.view(x.shape[0], -1, x.shape[-1])
+
+        return x, H // 2, W // 2
 
 
 # =============================================================================
@@ -136,7 +158,13 @@ def window_partition(x, window_size):
         windows: (B * num_windows, window_size, window_size, C)
     """
     # TODO: 위 힌트대로 view, permute, contiguous, view 순서로 구현
-    pass
+    B, H, W, C = x.shape
+    ws = window_size
+    x = x.view(B, H//ws, ws, W//ws, ws, C)
+    x = x.permute(0, 1, 3, 2, 4, 5).contiguous()
+    x = x.view(-1, ws, ws, C)
+    return x
+
 
 
 def window_reverse(windows, window_size, H, W):
@@ -154,7 +182,15 @@ def window_reverse(windows, window_size, H, W):
         x: (B, H, W, C)
     """
     # TODO: window_partition의 역과정 구현
-    pass
+    ws = window_size
+    _B, _H, _W, C = windows.shape
+    B = _B // (H//ws * W//ws)
+    x = windows.view(B, H//ws, W//ws, ws, ws, C)
+    x = x.permute(0, 1, 3, 2, 4, 5).contiguous()
+    x = x.view(B, H, W, C)
+
+    return x
+
 
 
 # =============================================================================
@@ -195,7 +231,27 @@ class WindowAttention(nn.Module):
         super().__init__()
         # TODO: 위 힌트를 참고하여 qkv, proj, relative_position_bias_table 등 정의
         # TODO: relative_position_index를 계산하고 register_buffer로 등록
-        pass
+        ws = window_size
+        self.dim = dim
+        self.num_heads = num_heads
+        self.qkv = nn.Linear(dim, dim * 3)
+        self.relative_position_bias_table = nn.Parameter(torch.zeros(((2*ws-1)*(2*ws-1), num_heads)))
+        
+        coords_h = torch.arange(ws)
+        coords_w = torch.arange(ws)
+        coords = torch.stack(torch.meshgrid([coords_h, coords_w]))  # (2, ws, ws)
+        coords_flatten = coords.view(2, -1)                          # (2, ws*ws)
+        relative_coords = coords_flatten[:, :, None] - coords_flatten[:, None, :]  # (2, ws*ws, ws*ws)
+        relative_coords = relative_coords.permute(1, 2, 0).contiguous()            # (ws*ws, ws*ws, 2)
+        relative_coords[:, :, 0] += ws - 1 
+        relative_coords[:, :, 1] += ws - 1
+        relative_coords[:, :, 0] *= 2 * ws - 1
+        relative_position_index = relative_coords.sum(-1)
+        self.register_buffer("relative_position_index", relative_position_index)
+        self.softmax = nn.Softmax(dim=-1)
+        self.dropout = nn.Dropout()
+        self.proj = nn.Linear(dim, dim) 
+
 
     def forward(self, x, mask=None):
         """
@@ -208,7 +264,31 @@ class WindowAttention(nn.Module):
             (B*num_windows, window_size*window_size, C)
         """
         # TODO: qkv → attention score + relative position bias (+ mask) → softmax → value → proj
-        pass
+        B_nW, N, C = x.shape
+        nH = self.num_heads
+
+        qkv = self.qkv(x) # (B*num_windows, window_size*window_size, 3*C) -> (B*nW, N, 3, nH, C//nH)
+        qkv = qkv.reshape(B_nW, N, 3, nH, C // nH).permute(2, 0, 3, 1, 4)
+        q, k, v = qkv[0], qkv[1], qkv[2] # #3 (B*nW, nH, N, C//nH)
+
+        scale = (C // nH) ** 0.5
+        attention_score = torch.matmul(q, k.transpose(-2,-1)) / scale # (B * num_windows, nH, N, N)
+        relative_bias = self.relative_position_bias_table[self.relative_position_index].permute(2, 0, 1) 
+        attention_score += relative_bias
+
+        if mask is not None:
+            nW = mask.shape[0]
+            attention_score = attention_score.view(-1, nW, nH, N, N) # (B, nW, nH, N, N)
+            attention_score += mask.unsqueeze(1).unsqueeze(0) # (num_windows, ws*ws, ws*ws) -> (nW, 1, N, N) -> (1, nW, 1, N, N)
+            attention_score = attention_score.view(-1, nH, N, N) # (B * num_windows, nH, N, N)
+
+        attention_score = self.softmax(attention_score)
+        attention_score = self.dropout(attention_score)
+        out = torch.matmul(attention_score, v)
+        out = out.permute(0, 2, 1, 3).reshape(B_nW, N, C)
+        out = self.proj(out)
+
+        return out
 
 
 # =============================================================================
@@ -250,7 +330,21 @@ class SwinTransformerBlock(nn.Module):
         # TODO: LayerNorm, WindowAttention, MLP 정의
         # TODO: shift_size > 0일 때 attention mask를 미리 계산하고 register_buffer로 등록하는 것을 고려
         #       (또는 forward에서 동적으로 생성해도 됨)
-        pass
+        self.pre_ln = nn.LayerNorm(dim)
+        self.post_ln = nn.LayerNorm(dim)
+
+        self.window_attn = WindowAttention(dim, window_size, num_heads)
+
+        hidden_dim = int(dim * mlp_ratio)
+        self.mlp = nn.Sequential(
+            nn.Linear(dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, dim),
+            nn.Dropout(dropout)
+        )
+        
+        self.shift_size = shift_size
+        self.window_size = window_size
 
     def forward(self, x, H, W):
         """
@@ -261,8 +355,59 @@ class SwinTransformerBlock(nn.Module):
             (B, H*W, C)
         """
         # TODO: 위 구현 힌트의 1~9 단계를 따라 구현
-        pass
+        B, _HW, C = x.shape
+        shortcut = x
+        x = self.pre_ln(x)
+        x = x.reshape(B, H, W, C)
 
+        if self.shift_size > 0:
+            x = torch.roll(x, shifts=(-self.shift_size, -self.shift_size), dims=(1, 2))
+
+            # 1. 원본 피처맵과 똑같은 크기의 가짜 맵을 만듭니다.
+            img_mask = torch.zeros((1, H, W, 1), device=x.device)
+            
+            # 2. 이동 후 쪼개졌을 때 서로 다른 구역이 될 곳에 고유 번호(0~8)를 매깁니다.
+            h_slices = (slice(0, -self.window_size),
+                        slice(-self.window_size, -self.shift_size),
+                        slice(-self.shift_size, None))
+            w_slices = (slice(0, -self.window_size),
+                        slice(-self.window_size, -self.shift_size),
+                        slice(-self.shift_size, None))
+            
+            cnt = 0
+            for h in h_slices:
+                for w in w_slices:
+                    img_mask[:, h, w, :] = cnt
+                    cnt += 1
+
+            # 3. 이 가짜 맵도 똑같이 윈도우 크기로 쪼갭니다.
+            mask_windows = window_partition(img_mask, self.window_size)  # (nW, ws, ws, 1)
+            mask_windows = mask_windows.view(-1, self.window_size * self.window_size)  # (nW, ws*ws)
+            
+            # 4. 윈도우 안의 패치들끼리 번호가 같은지 다른지 확인합니다.
+            # shape: (nW, ws*ws, ws*ws)
+            attn_mask = mask_windows.unsqueeze(1) - mask_windows.unsqueeze(2)
+            
+            # 번호가 다르면(0이 아니면) -100을 더해 차단하고, 같으면 0을 더해 유지합니다.
+            attn_mask = attn_mask.masked_fill(attn_mask != 0, float(-100.0)).masked_fill(attn_mask == 0, float(0.0))
+        else:
+            attn_mask = None
+
+        
+        x_win = window_partition(x, self.window_size) #  (B * num_windows, window_size, window_size, C)
+        x_win = x_win.view(-1, self.window_size * self.window_size, C)
+        x_win = self.window_attn(x_win, mask=attn_mask) # (B*num_windows, window_size*window_size, C) -> (B*num_windows, window_size*window_size, C)
+        x_win = x_win.view(-1, self.window_size, self.window_size, C)
+        x = window_reverse(x_win, self.window_size, H, W)
+
+        if self.shift_size > 0:
+            x = torch.roll(x, shifts=(self.shift_size, self.shift_size), dims=(1, 2))
+
+        x = x.view(B, H*W, C)
+        x = shortcut + x
+        x = x + self.mlp(self.post_ln(x))
+
+        return x
 
 # =============================================================================
 # Step 6: Swin Transformer Stage
@@ -281,7 +426,23 @@ class BasicLayer(nn.Module):
         super().__init__()
         # TODO: SwinTransformerBlock × depth개 생성 (shift_size 교대)
         # TODO: downsample=True이면 PatchMerging 추가
-        pass
+        self.blocks = nn.ModuleList()
+        for i in range(depth):
+            shift_size = 0 if (i % 2 == 0) else (window_size // 2)
+
+            self.blocks.append(
+                SwinTransformerBlock(
+                    dim=dim, 
+                    num_heads=num_heads, 
+                    window_size=window_size, 
+                    shift_size=shift_size, 
+                    mlp_ratio=mlp_ratio)
+            )
+
+        if downsample is True:
+            self.patch_merger = PatchMerging(dim)
+
+        self.downsample = downsample
 
     def forward(self, x, H, W):
         """
@@ -293,7 +454,13 @@ class BasicLayer(nn.Module):
             H', W': 새 feature map 크기
         """
         # TODO: 각 블록 순회 → (downsample 있으면) PatchMerging 적용
-        pass
+        for block in self.blocks:
+            x = block(x, H, W)
+        
+        if self.downsample:
+            x, H, W = self.patch_merger(x, H, W)
+
+        return x, H, W
 
 
 # =============================================================================
@@ -321,7 +488,22 @@ class SwinTransformer(nn.Module):
         # TODO: 3. LayerNorm(최종 채널 수)
         # TODO: 4. AdaptiveAvgPool1d(1) 또는 단순 mean으로 Global Average Pooling
         # TODO: 5. nn.Linear(최종 채널 수, num_classes) 분류 헤드
-        pass
+        self.patch_size = patch_size
+        self.patch_embedding = PatchEmbedding(in_channels=in_channels, embed_dim=embed_dim, patch_size=patch_size)
+        
+        final_dim = embed_dim * (2 ** (len(depths) - 1))
+        self.ln = nn.LayerNorm(final_dim)
+
+        self.basic_layers = nn.ModuleList()
+        for i in range(4):
+            downsample = True
+            if i == 3:
+                downsample = False
+            self.basic_layers.append(BasicLayer(embed_dim * 2 ** i, depths[i], num_heads[i], window_size, mlp_ratio, downsample))
+
+        self.avg_pool = nn.AdaptiveAvgPool1d(1)
+        
+        self.final_fc = nn.Linear(final_dim, num_classes)
 
     def forward(self, x):
         """
@@ -331,7 +513,24 @@ class SwinTransformer(nn.Module):
             (B, num_classes)
         """
         # TODO: PatchEmbedding → Stage 1~4 → LayerNorm → GAP → Classifier
-        pass
+        B, C, H, W = x.shape
+        _H = H // self.patch_size
+        _W = W // self.patch_size
+
+        x = self.patch_embedding(x)
+        
+        for basic_layer in self.basic_layers:
+            x, _H, _W = basic_layer(x, _H, _W)
+        
+        x = self.ln(x)
+
+        x = x.transpose(1, 2)
+        x = self.avg_pool(x)
+        x = x.flatten(1)
+
+        x = self.final_fc(x)
+
+        return x
 
 
 # =============================================================================
@@ -339,12 +538,12 @@ class SwinTransformer(nn.Module):
 # =============================================================================
 if __name__ == "__main__":
     # --- 기본 동작 테스트 ---
-    # x = torch.randn(2, 3, 224, 224)
-    # model = SwinTransformer(num_classes=200)  # Tiny-ImageNet용
-    # out = model(x)
-    # print("Output shape:", out.shape)  # 예상: torch.Size([2, 200])
+    x = torch.randn(2, 3, 224, 224)
+    model = SwinTransformer(num_classes=200)  # Tiny-ImageNet용
+    out = model(x)
+    print("Output shape:", out.shape)  # 예상: torch.Size([2, 200])
 
     # --- 파라미터 수 확인 ---
-    # total_params = sum(p.numel() for p in model.parameters())
-    # print(f"Total parameters: {total_params / 1e6:.1f}M")  # Swin-T 기준 약 28M
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Total parameters: {total_params / 1e6:.1f}M")  # Swin-T 기준 약 28M
     pass
